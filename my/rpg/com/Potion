@@ -1,0 +1,15 @@
+package my.rpg.com;
+
+// Potion class
+public class Potion extends Item {
+    private int healingPower;
+
+    public Potion(String name, int value, int healingPower) {
+        super(name, value);
+        this.healingPower = healingPower;
+    }
+
+    public int getHealingPower() {
+        return healingPower;
+    }
+}
