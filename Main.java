@@ -14,7 +14,7 @@ public class Main {
             frame.add(gameEngine);
             frame.setSize(600, 400);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.add(gameEngine); 
+    
             frame.setVisible(true);
 
             gameEngine.requestFocusInWindow();

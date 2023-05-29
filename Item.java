@@ -18,6 +18,12 @@ public abstract class Item {
         return this.type;
     }
 
+    public String getName(){
+
+        return this.name;
+
+    }
+
     // getters and setters
 
     public int getX() {

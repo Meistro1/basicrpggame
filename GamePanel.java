@@ -3,6 +3,7 @@ package saved;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.util.List;
 
 public class GamePanel extends JPanel {
     private Object[][] map;
@@ -25,37 +26,58 @@ public class GamePanel extends JPanel {
         actionMap.put("moveUp", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                GamePanel.this.moveHero(0, -1);
+                int newHeroX = character.getX();
+                int newHeroY = character.getY() - 1;
+                Object newItem = map[newHeroY][newHeroX];
+                moveHero(0, -1, newHeroX, newHeroY, newItem);
                 repaint();
             }
         });
-
+        
         inputMap.put(KeyStroke.getKeyStroke("A"), "moveLeft");
         actionMap.put("moveLeft", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                moveHero(-1, 0);
+                int newHeroX = character.getX() - 1;
+                int newHeroY = character.getY();
+                Object newItem = map[newHeroY][newHeroX];
+                moveHero(-1, 0, newHeroX, newHeroY, newItem);
                 repaint();
             }
         });
+        
 
         inputMap.put(KeyStroke.getKeyStroke("S"), "moveDown");
         actionMap.put("moveDown", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                moveHero(0, 1);
+                int newHeroX = character.getX();
+                int newHeroY = character.getY() + 1;
+                Object newItem = map[newHeroY][newHeroX];
+                moveHero(0, 1, newHeroX, newHeroY, newItem);
                 repaint();
             }
         });
-
+        
         inputMap.put(KeyStroke.getKeyStroke("D"), "moveRight");
         actionMap.put("moveRight", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                moveHero(1, 0);
+                int newHeroX = character.getX() + 1;
+                int newHeroY = character.getY();
+                Object newItem = map[newHeroY][newHeroX];
+                moveHero(1, 0, newHeroX, newHeroY, newItem);
                 repaint();
             }
         });
+        inputMap.put(KeyStroke.getKeyStroke("I"), "viewInventory");
+        actionMap.put("viewInventory", new AbstractAction() {
+         @Override
+          public void actionPerformed(ActionEvent e) {
+          character.viewInventory();
+    }
+});
+        
     }
 
     @Override
@@ -98,21 +120,44 @@ public class GamePanel extends JPanel {
         int y = character.getY() * TILE_SIZE;
         g.setColor(Color.BLUE);
         g.fillRect(x, y, TILE_SIZE, TILE_SIZE);
+        drawInventory(g);
+
     }
-    private void moveHero(int dx, int dy) {
-        int newHeroX = character.getX() + dx;
-        int newHeroY = character.getY() + dy;
+
     
+    private void drawInventory(Graphics g) {
+        List<Item> inventory = character.getInventory();
+        int inventoryOffsetX = 10;
+        int inventoryOffsetY = 10;
+        int itemSpacing = 20;
+
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("Arial", Font.PLAIN, 14));
+
+        for (int i = 0; i < inventory.size(); i++) {
+            Item item = inventory.get(i);
+            String itemName = item.getName();
+
+            int itemX = inventoryOffsetX;
+            int itemY = inventoryOffsetY + i * itemSpacing;
+
+            g.drawString(itemName, itemX, itemY);
+        }
+    }
+
+
+    private void moveHero(int dx, int dy, int newHeroX, int newHeroY, Object newItem) {
         // Check if new position is within the world and not a wall
         if (newHeroX >= 0 && newHeroX < map.length && newHeroY >= 0 && newHeroY < map.length && !(map[newHeroY][newHeroX] instanceof Wall)) {
             heroX = newHeroX;
             heroY = newHeroY;
             character.setX(heroX);  // update character's position
             character.setY(heroY);
+    
+            character.pickUpItem(map, newHeroX, newHeroY, newItem); // Call pickUpItem method to handle item pickup
         }
     }
-
-    @Override
+    
     public boolean isFocusable() {
         return true;
    

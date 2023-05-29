@@ -40,8 +40,6 @@ public class GameEngine extends JPanel {
         this.gamePanel.setFocusable(true);
         this.gamePanel.requestFocusInWindow();
 
-        this.gamePanel.addKeyListener(new GameKeyListener());
-    
         // Initialize stats panel and labels
         this.statsPanel = new JPanel(new GridLayout(7, 1));
         this.nameLabel = new JLabel();
@@ -74,6 +72,13 @@ public class GameEngine extends JPanel {
 
     }
 
+    private void handleCommand(String command) {
+        if (command.equals("inventory")) {
+            character.viewInventory();
+        } else {
+            System.out.println("Invalid command!");
+        }
+    }
 
     private void createRoom(int startX, int startY, int width, int height) {
         // create horizontal walls

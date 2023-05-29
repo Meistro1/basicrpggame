@@ -1,8 +1,9 @@
 package saved;
-import java.util.ArrayList;
 import java.util.*;
 
-public class Character {
+import javax.swing.JOptionPane;
+
+public class Character{
     private String name;
     private String type;
     private int healthPoints;
@@ -47,7 +48,17 @@ public class Character {
     public int getExperience() {
         return experience;
     }
+    public void viewInventory() {
+        System.out.println("viewInventory method called");
 
+        List<Item> inventory = getInventory();
+        StringBuilder inventoryString = new StringBuilder("Inventory:\n");
+        for (Item item : inventory) {
+            inventoryString.append(item.getName()).append("\n");
+        }
+    
+        JOptionPane.showMessageDialog(null, inventoryString.toString(), "Inventory", JOptionPane.INFORMATION_MESSAGE);
+    }
     public void addExperience(int exp) {
         this.experience += exp;
         // Assume that every 100 experience points increases the level
@@ -104,7 +115,16 @@ public class Character {
         }
     }
     
-    
+    public void pickUpItem(Object[][] map, int newX, int newY, Object newItem) {
+        if (newItem instanceof Item) {
+            Item item = (Item) newItem;
+            // Handle the picked up item (e.g., increase health, add to inventory, etc.)
+            this.inventory.add(item); 
+            // Update the map to remove the item
+            map[newY][newX] = null;
+        }
+    }
+
     public int getX() {
         return this.x;
     }
@@ -134,7 +154,9 @@ public class Character {
         this.equippedItems.remove(slot);
     }
 
-
+    public void setHealthPoints(int healthPoints) {
+        this.healthPoints = healthPoints;
+    }
 
     @Override
     public String toString() {
