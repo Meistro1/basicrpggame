@@ -9,9 +9,9 @@ public class CharacterSelection {
     
     public CharacterSelection() {
         this.availableCharacters = new ArrayList<>();
-        this.availableCharacters.add(new Character("Warrior", "Human", 100, 70, 30, 40));
-        this.availableCharacters.add(new Character("Rogue", "Elf", 80, 30, 60, 70));
-        this.availableCharacters.add(new Character("Mage", "Human", 70, 20, 80, 50));
+        this.availableCharacters.add(new Character("Warrior", "Human", 30, 20, 15, 17));
+        this.availableCharacters.add(new Character("Rogue", "Elf", 20, 15, 22, 25));
+        this.availableCharacters.add(new Character("Mage", "Human", 20, 10, 25, 25));
     }
 
     public Character selectCharacter() {

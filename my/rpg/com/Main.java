@@ -9,12 +9,12 @@ public class Main {
 
         SwingUtilities.invokeLater(() -> {
             JFrame frame = new JFrame("RPG GAME");
-            GameEngine gameEngine = new GameEngine(selectedCharacter, 50);
+            GameEngine gameEngine = new GameEngine(selectedCharacter, 100);
 
             frame.add(gameEngine);
             frame.setSize(600, 400);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.add(gameEngine); 
+    
             frame.setVisible(true);
 
             gameEngine.requestFocusInWindow();
